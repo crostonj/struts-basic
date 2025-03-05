@@ -1,32 +1,42 @@
 package com.test.action;
 
+
 import com.microsoft.aad.msal4j.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import java.util.Collections;
-import java.net.URI;
-import java.util.concurrent.CompletableFuture;
 import org.apache.struts2.ServletActionContext;
+import java.net.URI;
+import java.util.Collections;
+import java.util.concurrent.CompletableFuture;
+import com.test.config.EnvConfig;
 
 public class MSALCallbackAction {
-    private static final String CLIENT_ID = "your-client-id";
-    private static final String TENANT_ID = "your-tenant-id";
-    private static final String CLIENT_SECRET = "your-client-secret";
-    private static final String REDIRECT_URI = "http://localhost:8080/yourapp/msal_callback";
-
     public String execute() {
+        String clientId = EnvConfig.get("CLIENT_ID");
+        String tenantId = EnvConfig.get("TENANT_ID");
+        String clientSecret = EnvConfig.get("CLIENT_SECRET");
+        String redirectUri = EnvConfig.get("REDIRECT_URI");
+
         try {
             HttpServletRequest request = ServletActionContext.getRequest();
-            HttpSession session = request.getSession();
+            HttpSession session = request.getSession(true); // Ensure session exists
 
-            String authority = "https://login.microsoftonline.com/" + TENANT_ID;
-            ConfidentialClientApplication app = ConfidentialClientApplication.builder(CLIENT_ID,
-                    ClientCredentialFactory.createFromSecret(CLIENT_SECRET))
+            System.out.println("MSAL Callback: Handling authentication response...");
+
+            String code = request.getParameter("code");
+            if (code == null || code.isEmpty()) {
+                System.out.println("MSAL Callback: No authorization code found, redirecting to login.");
+                return "error";
+            }
+
+            String authority = "https://login.microsoftonline.com/" + tenantId;
+            ConfidentialClientApplication app = ConfidentialClientApplication.builder(clientId,
+                            ClientCredentialFactory.createFromSecret(clientSecret))
                     .authority(authority)
                     .build();
 
             AuthorizationCodeParameters parameters =
-                    AuthorizationCodeParameters.builder(request.getParameter("code"), new URI(REDIRECT_URI))
+                    AuthorizationCodeParameters.builder(code, new URI(redirectUri))
                             .scopes(Collections.singleton("openid profile email"))
                             .build();
 
@@ -36,6 +46,8 @@ public class MSALCallbackAction {
             // Store user info in session
             session.setAttribute("user", result.account().username());
             session.setAttribute("token", result.accessToken());
+
+            System.out.println("MSAL Callback: User authenticated as " + result.account().username());
 
             return "success";
         } catch (Exception e) {

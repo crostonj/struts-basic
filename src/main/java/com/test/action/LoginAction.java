@@ -1,27 +1,40 @@
 package com.test.action;
 
 import com.microsoft.aad.msal4j.*;
+import com.test.config.EnvConfig;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.struts2.ServletActionContext;
+
 import java.util.Collections;
 
 
 public class LoginAction {
-    private static final String CLIENT_ID = "your-client-id";
-    private static final String TENANT_ID = "your-tenant-id";
-    private static final String CLIENT_SECRET = "your-client-secret";
-    private static final String REDIRECT_URI = "http://localhost:8080/yourapp/msal_callback";
+    String clientId = EnvConfig.get("CLIENT_ID");
+    String tenantId = EnvConfig.get("TENANT_ID");
+    String clientSecret = EnvConfig.get("CLIENT_SECRET");
+    String redirectUri = EnvConfig.get("REDIRECT_URI");
 
     public String execute() throws Exception {
-        String authority = "https://login.microsoftonline.com/" + TENANT_ID;
-        ConfidentialClientApplication app = ConfidentialClientApplication.builder(CLIENT_ID,
-                ClientCredentialFactory.createFromSecret(CLIENT_SECRET))
+        System.out.println("LoginAction: Redirecting user to Azure AD...");
+
+        String authority = "https://login.microsoftonline.com/" + tenantId;
+        ConfidentialClientApplication app = ConfidentialClientApplication.builder(clientId,
+                        ClientCredentialFactory.createFromSecret(clientSecret))
                 .authority(authority)
                 .build();
 
         AuthorizationRequestUrlParameters parameters =
-                AuthorizationRequestUrlParameters.builder(REDIRECT_URI, Collections.singleton("openid profile email"))
+                AuthorizationRequestUrlParameters.builder(redirectUri, Collections.singleton("openid profile email"))
                         .responseMode(ResponseMode.QUERY)
                         .build();
 
-        return "redirect:" + app.getAuthorizationRequestUrl(parameters).toString();
+        String authUrl = app.getAuthorizationRequestUrl(parameters).toString();
+        System.out.println("LoginAction: Redirecting to: " + authUrl);
+
+        // Get HttpServletResponse to perform an actual redirect
+        HttpServletResponse response = ServletActionContext.getResponse();
+        response.sendRedirect(authUrl);
+
+        return null; // No further Struts processing needed
     }
 }

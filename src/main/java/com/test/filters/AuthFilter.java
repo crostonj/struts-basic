@@ -12,37 +12,42 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter("/*")  // Apply this filter to all pages
+@WebFilter("/*")
 public class AuthFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
-        if (session == null || session.getAttribute("user") == null) {
-            res.sendRedirect(req.getContextPath() + "/login");
-            return;
-        }
-        
-        // Allow public access to login and callback URLs
         String path = req.getRequestURI();
+        System.out.println("AuthFilter: Checking request for: " + path);
+
+        // Allow public access to login and msal_callback URLs
         if (path.endsWith("login") || path.endsWith("msal_callback") || path.endsWith("logout")) {
+            System.out.println("AuthFilter: Allowing access to " + path);
             chain.doFilter(request, response);
             return;
         }
 
-        // Check if user is logged in
+        // Debug session state
+        if (session == null) {
+            System.out.println("AuthFilter: No session found.");
+        } else {
+            Object user = session.getAttribute("user");
+            System.out.println("AuthFilter: Session found, user = " + user);
+        }
+
+        // If user is not authenticated, redirect to login
         if (session == null || session.getAttribute("user") == null) {
-            res.sendRedirect(req.getContextPath() + "/login");
+            String redirectURL = req.getContextPath() + "/login";
+            System.out.println("AuthFilter: Redirecting to " + redirectURL);
+            res.sendRedirect(redirectURL);
             return;
         }
 
-        // User is authenticated, continue processing
+        System.out.println("AuthFilter: User authenticated, proceeding to " + path);
         chain.doFilter(request, response);
     }
-
-    public void init(FilterConfig fConfig) throws ServletException {}
-    public void destroy() {}
 }
