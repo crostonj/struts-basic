@@ -20,13 +20,12 @@
             <result>/index.jsp</result>
         </action>
 
-        <action name="home" class="com.test.action.HomeAction">
-            <result>/home.jsp</result>
-        </action>
-
-
         <action name="hello" class="com.test.action.HelloWorldAction" method="execute">
             <result name="success">/HelloWorld.jsp</result>
+        </action>
+
+        <action name="layout" class="com.test.action.LayoutAction" method="execute">
+            <result name="success">/Layout.jsp</result>
         </action>
 
         <action name="login" class="com.test.action.LoginAction">
@@ -40,6 +39,7 @@
 
         <action name="logout" class="com.test.action.LogoutAction">
             <result type="redirect">https://login.microsoftonline.com/common/oauth2/logout</result>
+            <result name="error">/error.jsp</result> <!-- Add this to handle errors -->
         </action>
     </package>
 
