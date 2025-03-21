@@ -2,7 +2,7 @@
 FROM tomcat:10.1.16-jdk21
 
 # Install necessary tools (e.g., Maven)
-RUN apt-get update && apt-get install -y git maven
+RUN apt-get update && apt-get install -y git maven skopeo
 
 # Copy your project files into the container
 COPY . /usr/local/tomcat/webapps/myapp/
@@ -16,7 +16,7 @@ WORKDIR /usr/local/tomcat/webapps/myapp/
 RUN mvn clean package
 
 # Deploy the WAR file (if using Maven)
-RUN mv target/*.war /usr/local/tomcat/webapps/ROOT.war
+RUN mv target/*.war /usr/local/tomcat/webapps/basic-struts.war
 
 # Expose Tomcat's port
 EXPOSE 8080

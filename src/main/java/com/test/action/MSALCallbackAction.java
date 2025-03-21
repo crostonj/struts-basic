@@ -12,10 +12,10 @@ import com.test.config.EnvConfig;
 
 public class MSALCallbackAction {
     public String execute() {
-        String clientId = EnvConfig.get("CLIENT_ID");
-        String tenantId = EnvConfig.get("TENANT_ID");
-        String clientSecret = EnvConfig.get("CLIENT_SECRET");
-        String redirectUri = EnvConfig.get("REDIRECT_URI");
+        String clientId = System.getenv("CLIENT_ID");
+        String tenantId = System.getenv("TENANT_ID");
+        String clientSecret = System.getenv("CLIENT_SECRET");
+        String redirectUri = System.getenv("REDIRECT_URI");
 
         try {
             HttpServletRequest request = ServletActionContext.getRequest();

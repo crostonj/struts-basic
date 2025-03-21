@@ -4,11 +4,17 @@
         <Console name="STDOUT" target="SYSTEM_OUT">
             <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
         </Console>
+        <!-- Add a File Appender -->
+        <File name="FileAppender" fileName="logs/app.log">
+            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+        </File>
     </Appenders>
     <Loggers>
         <Logger name="org.apache.struts2" level="debug"/>
         <Root level="warn">
             <AppenderRef ref="STDOUT"/>
+            <!-- Reference the File Appender -->
+            <AppenderRef ref="FileAppender"/>
         </Root>
     </Loggers>
 </Configuration>
