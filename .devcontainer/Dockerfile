@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y maven
 COPY . /usr/local/tomcat/webapps/myapp/
 
 # Set the working directory
-WORKDIR /usr/local/tomcat/webapps/myapp/
+WORKDIR /usr/local/tomcat/webapps/myapp/struts-basic/
 # Build the WAR file (if using Maven)
 RUN mvn clean package
 
