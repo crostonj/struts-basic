@@ -6,7 +6,7 @@
         "dockerfile": "../Dockerfile"
     },
     "forwardPorts": [8080, 5005],
-    "workspaceFolder": "/workspace"
+    "workspaceFolder": "/usr/local/tomcat/webapps/myapp"
 
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
