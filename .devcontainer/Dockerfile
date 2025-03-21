@@ -5,7 +5,7 @@ FROM tomcat:10.1.16-jdk21
 RUN apt-get update && apt-get install -y maven
 
 # Copy your project files into the container
-COPY . /usr/local/tomcat/webapps/myapp/
+COPY ../ /usr/local/tomcat/webapps/myapp/
 
 # List the contents of the copied directory
 RUN ls -la /usr/local/tomcat/webapps/myapp/
