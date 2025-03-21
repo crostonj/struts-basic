@@ -5,10 +5,10 @@ FROM tomcat:10.1.16-jdk21
 RUN apt-get update && apt-get install -y maven
 
 # Copy your project files into the container
-COPY . /usr/local/tomcat/webapps/myapp/
+COPY . /workspace/
 
 # Set the working directory
-WORKDIR /usr/local/tomcat/webapps/myapp/
+WORKDIR /workspace
 
 # Build the WAR file (if using Maven)
 RUN mvn clean package
