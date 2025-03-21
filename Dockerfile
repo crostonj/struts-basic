@@ -11,7 +11,7 @@ COPY . /usr/local/tomcat/webapps/myapp/
 RUN ls -la /usr/local/tomcat/webapps/myapp/
 
 # Set the working directory
-WORKDIR /usr/local/tomcat/webapps/myapp/struts-basic/
+WORKDIR /usr/local/tomcat/webapps/myapp/
 # Build the WAR file (if using Maven)
 RUN mvn clean package
 
