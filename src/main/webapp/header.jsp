@@ -6,20 +6,44 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%
-
-    if (request.getAttribute("validAccess") == null || !(Boolean)request.getAttribute("validAccess")) {
-        response.sendRedirect("home.jsp");
-        return;
-    }
-%>
-
-
 <div class="header">
-    <h1>My JSP Site</h1>
-    <nav>
-        <a href="home.jsp">Home</a> |
-        <a href="home.jsp?page=about">About</a> |
-        <a href="home.jsp?page=contact">Contact</a>
-    </nav>
+    <div class="header-left">
+        <h1>My JSP Site</h1>
+        <nav>
+            <div class="dropdown">
+            <a href="layout.jsp">Home</a>
+                <div class="dropdown-content">
+                    <a href="#">Item One</a>
+                    <a href="#">Item Two</a>
+                    <a href="#">Item Three</a>
+                    <a href="#">Item Four</a>
+                    <a href="#">Item Five</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="layout.jsp?page=about">About</a>
+                <div class="dropdown-content">
+                    <a href="#">Item One</a>
+                    <a href="#">Item Two</a>
+                    <a href="#">Item Three</a>
+                    <a href="#">Item Four</a>
+                    <a href="#">Item Five</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="layout.jsp?page=contact">Contact</a>
+                <div class="dropdown-content">
+                    <a href="#">Item One</a>
+                    <a href="#">Item Two</a>
+                    <a href="#">Item Three</a>
+                    <a href="#">Item Four</a>
+                    <a href="#">Item Five</a>
+                </div>
+            </div>
+
+        </nav>
+    </div>
+    <div class="header-right">
+        <img src="images/profile.png" alt="Profile Picture" class="profile-pic">
+    </div>
 </div>
