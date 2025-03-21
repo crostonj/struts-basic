@@ -6,8 +6,15 @@
         "dockerfile": "../Dockerfile"
     },
     "forwardPorts": [8080, 5005],
-    "workspaceFolder": "/usr/local/tomcat/webapps/myapp"
+    "workspaceFolder": "/usr/local/tomcat/webapps/myapp",
 
+	    // Add the environment variable here
+	"containerEnv": {
+		"CLIENT_ID": "3bb10701-05f5-4680-9f42-a49c08780d5c",
+		"TENANT_ID": "9c8d7196-e4cf-4c75-9312-3b2fc26f41e6",
+		"REDIRECT_URI": "http://localhost:8080/msal_callback"
+	}
+	
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

@@ -9,10 +9,10 @@ import java.util.Collections;
 
 
 public class LoginAction {
-    String clientId = EnvConfig.get("CLIENT_ID");
-    String tenantId = EnvConfig.get("TENANT_ID");
-    String clientSecret = EnvConfig.get("CLIENT_SECRET");
-    String redirectUri = EnvConfig.get("REDIRECT_URI");
+    String clientId = System.getenv("CLIENT_ID");
+    String tenantId =System.getenv("TENANT_ID");
+    String clientSecret = System.getenv("CLIENT_SECRET");
+    String redirectUri = System.getenv("REDIRECT_URI");
 
     public String execute() throws Exception {
         System.out.println("LoginAction: Redirecting user to Azure AD...");
