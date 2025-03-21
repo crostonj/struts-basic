@@ -5,11 +5,10 @@ FROM tomcat:10.1.16-jdk21
 RUN apt-get update && apt-get install -y maven
 
 # Copy your project files into the container
-COPY . /workspace/struts-basic
+COPY . /usr/local/tomcat/webapps/myapp/
 
 # Set the working directory
-WORKDIR /workspace/struts-basic/
-
+WORKDIR /usr/local/tomcat/webapps/myapp/
 # Build the WAR file (if using Maven)
 RUN mvn clean package
 
