@@ -5,10 +5,10 @@ FROM tomcat:10.1.16-jdk21
 RUN apt-get update && apt-get install -y maven
 
 # Copy your project files into the container
-COPY . /workspace/
+COPY . /workspace/struts-basic
 
 # Set the working directory
-WORKDIR /workspace/basic-struts
+WORKDIR /workspace/struts-basic/
 
 # Build the WAR file (if using Maven)
 RUN mvn clean package

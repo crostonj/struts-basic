@@ -6,7 +6,7 @@
         "dockerfile": "Dockerfile"
     },
     "forwardPorts": [8080, 5005],
-    "workspaceFolder": "/workspace/basic-struts"
+    "workspaceFolder": "/workspace/struts-basic"
 
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
