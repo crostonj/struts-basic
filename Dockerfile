@@ -2,7 +2,7 @@
 FROM tomcat:10.1.16-jdk21
 
 # Install necessary tools (e.g., Maven)
-RUN apt-get update && apt-get install -y maven
+RUN apt-get update && apt-get install -y git maven
 
 # Copy your project files into the container
 COPY . /usr/local/tomcat/webapps/myapp/
