@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y maven
 COPY . /workspace/
 
 # Set the working directory
-WORKDIR /workspace
+WORKDIR /workspace/basic-struts
 
 # Build the WAR file (if using Maven)
 RUN mvn clean package
